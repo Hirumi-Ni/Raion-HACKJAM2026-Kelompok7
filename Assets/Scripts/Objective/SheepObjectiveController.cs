@@ -29,6 +29,8 @@ public class SheepObjectiveController : MonoBehaviour
 
     private void AnimalSacrificeExchange()
     {
+        if (currentSheepAmount <= 0) return;
+
         currentSheepAmount--;
 
         EventHandler.WhenAnimalSacrificed();
