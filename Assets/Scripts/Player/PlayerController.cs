@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        moveInput = InputManager.instance.GetPlayerMovement();
+        moveInput = InputManager.instance.GetPlayerMovement().normalized;
     }
     
     private void HandleMovement()
