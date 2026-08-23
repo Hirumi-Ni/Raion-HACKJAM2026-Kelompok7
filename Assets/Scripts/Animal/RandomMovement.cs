@@ -1,38 +1,57 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; //important
 
 //if you use this code you are contractually obligated to like the YT video
 public class RandomMovement : MonoBehaviour //don't forget to change the script name if you haven't
 {
-    public NavMeshAgent agent;
-    public float range; //radius of sphere
+    [SerializeField] private float maxWaitingTime;
+    [SerializeField] private float range; //radius of sphere
 
-    public Transform centrePoint; //centre of the area the agent wants to move around in
+    private bool isWaiting = false;
+    private NavMeshAgent agent;
+    private Transform centrePoint; //centre of the area the agent wants to move around in
     //instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
 
-    void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        centrePoint = agent.transform;
+    }
+
+    private void Start()
+    {
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
 
-
-    void Update()
+    private void Update()
     {
+        if (isWaiting) return;
+
         if (agent.remainingDistance <= agent.stoppingDistance) //done with path
         {
-            Vector3 point;
-            if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
-            {
-                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
-                agent.SetDestination(point);
-            }
+            StartCoroutine(WaitThenSetDestination());
         }
 
     }
+
+    private IEnumerator WaitThenSetDestination()
+    {
+        isWaiting = true;
+        float duration = Random.Range(0, maxWaitingTime);
+        yield return new WaitForSeconds(duration);
+
+        Vector3 point;
+        if (RandomPoint(centrePoint.position, range, out point))
+        {
+            Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
+            agent.SetDestination(point);
+        }
+
+        isWaiting = false;
+    }
+
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
 
@@ -49,6 +68,4 @@ public class RandomMovement : MonoBehaviour //don't forget to change the script 
         result = Vector3.zero;
         return false;
     }
-
-
 }
