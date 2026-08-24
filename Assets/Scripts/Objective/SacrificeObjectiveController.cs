@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SacrificeObjectiveController : MonoBehaviour
 {
-    [SerializeField] private int targetSacrificeAmount;
-    private int currentSacrificeAmount;
+    [field: SerializeField] public int targetSacrificeAmount { get; private set; }
+    public int currentSacrificeAmount { get; private set; }
     
     private void OnEnable()
     {

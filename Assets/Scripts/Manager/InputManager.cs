@@ -34,4 +34,9 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Move.ReadValue<Vector2>();
     }
+
+    public bool GetSpaceKeyPress()
+    {
+        return playerControls.Player.Jump.IsPressed();
+    }
 }

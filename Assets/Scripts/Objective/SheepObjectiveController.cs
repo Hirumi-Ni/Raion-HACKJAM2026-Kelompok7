@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SheepObjectiveController : MonoBehaviour
 {
-    [SerializeField] private int targetSheepAmount;
-    private int currentSheepAmount;
+    [field:SerializeField] public int targetSheepAmount { get; private set; }
+    public int currentSheepAmount { get; private set; }
 
     private void OnEnable()
     {
