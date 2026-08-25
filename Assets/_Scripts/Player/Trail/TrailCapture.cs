@@ -13,11 +13,10 @@ public class TrailCapture : MonoBehaviour
 
     public void Capture(Vector2[] polygon)
     {
+        results.Clear();
+        
         captureCollider.SetPath(0, polygon);
         captureCollider.enabled = true;
-
-        results.Clear();
-
         captureCollider.Overlap(results);
 
         foreach (Collider2D collider in results)

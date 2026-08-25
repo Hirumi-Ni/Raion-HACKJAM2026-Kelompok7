@@ -29,16 +29,12 @@ public class TrailPathRecorder : MonoBehaviour
 
         float distance = Vector2.Distance(points[points.Count - 1], currentPos);
 
-        if (distance >= pointDistance)
-        {
-            points.Add(currentPos);
-        }
+        if (distance >= pointDistance) points.Add(currentPos);
     }
 
     private void OnDrawGizmos()
     {
-        if (points == null || points.Count < 2)
-            return;
+        if (points == null || points.Count < 2) return;
 
         Gizmos.color = Color.green;
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 96305d288e89e9f40a8ea4ee802b1c33
+guid: af19f4ef8906b4343aad7177051e5c69
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3634197535167078620
-    second: Lampu_0
+      213: 296464570817149286
+    second: Untitled92_20260825185127_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lampu_0
+      name: Untitled92_20260825185127_0
       rect:
         serializedVersion: 2
-        x: 69
+        x: 57
         y: 0
-        width: 125
-        height: 384
+        width: 128
+        height: 381
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 42f14c8b89cb09dc0800000000000000
-      internalID: -3634197535167078620
+      spriteID: 6697b08d4f04d1400800000000000000
+      internalID: 296464570817149286
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Lampu_0: -3634197535167078620
+      Untitled92_20260825185127_0: 296464570817149286
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

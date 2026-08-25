@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+//cek ini buat referensinya: https://medium.com/@markomeara98/calculating-intersection-points-in-unity-cf010c155491
 public class TrailLoopDetector : MonoBehaviour
 {
     [SerializeField] private TrailCapture trailCapture;
@@ -8,6 +9,7 @@ public class TrailLoopDetector : MonoBehaviour
     private TrailController trailController;
     private bool wasTrailActive;
 
+    #region DebugAttribute
     // Debug
     private Vector2 debugA;
     private Vector2 debugB;
@@ -17,6 +19,7 @@ public class TrailLoopDetector : MonoBehaviour
     private bool showDebugSegments;
     private bool showIntersection;
     private List<Vector2> debugLoop;
+    #endregion
 
     private void Awake()
     {
@@ -69,14 +72,8 @@ public class TrailLoopDetector : MonoBehaviour
         points.Clear();
     }
 
-    private bool CheckClosedLoop(
-        List<Vector2> points,
-        out List<Vector2> loop)
+    private bool CheckClosedLoop(List<Vector2> points, out List<Vector2> loop)
     {
-        Debug.Log(
-            $"Trying loop detection. Point count: {points.Count}"
-        );
-
         loop = null;
 
         // Check every segment against every non-adjacent segment
@@ -95,25 +92,14 @@ public class TrailLoopDetector : MonoBehaviour
                 debugB = b;
                 debugC = c;
                 debugD = d;
-
                 showDebugSegments = true;
 
-                if (TryGetIntersection(
-                    a,
-                    b,
-                    c,
-                    d,
-                    out Vector2 intersection))
+                if (TryGetIntersection(a, b, c, d, out Vector2 intersection))
                 {
                     debugIntersection = intersection;
                     showIntersection = true;
 
-                    Debug.Log(
-                        $"INTERSECTION FOUND!\n" +
-                        $"Segment A: {a} -> {b}\n" +
-                        $"Segment B: {c} -> {d}\n" +
-                        $"Intersection: {intersection}"
-                    );
+                    Debug.Log($"Intersection Found!\n" + $"Segment A: {a} -> {b}\n" + $"Segment B: {c} -> {d}\n" + $"Intersection: {intersection}");
 
                     loop = new List<Vector2>();
 
@@ -137,30 +123,14 @@ public class TrailLoopDetector : MonoBehaviour
     {
         intersection = Vector2.zero;
 
-        float denominator =
-            (b.x - a.x) * (d.y - c.y) -
-            (b.y - a.y) * (d.x - c.x);
+        float denominator = (b.x - a.x) * (d.y - c.y) - (b.y - a.y) * (d.x - c.x);
 
-        // Parallel lines
-        if (Mathf.Abs(denominator) < 0.0001f)
-            return false;
+        if (Mathf.Abs(denominator) < 0.0001f) return false;
 
-        float t =
-            ((c.x - a.x) * (d.y - c.y) -
-             (c.y - a.y) * (d.x - c.x))
-            / denominator;
+        float t = ((c.x - a.x) * (d.y - c.y) - (c.y - a.y) * (d.x - c.x)) / denominator;
+        float u = ((c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x)) / denominator;
 
-        float u =
-            ((c.x - a.x) * (b.y - a.y) -
-             (c.y - a.y) * (b.x - a.x))
-            / denominator;
-
-        // Intersection is outside one or both segments
-        if (t < 0f || t > 1f ||
-            u < 0f || u > 1f)
-        {
-            return false;
-        }
+        if (t < 0f || t > 1f || u < 0f || u > 1f) return false;
 
         // Get the actual intersection position
         intersection = a + t * (b - a);
