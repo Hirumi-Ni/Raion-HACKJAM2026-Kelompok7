@@ -36,4 +36,9 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Interact.WasPressedThisFrame();
     }
+
+    public bool GetSwitchKeyPress()
+    {
+        return playerControls.Player.Switch.WasPressedThisFrame();
+    }
 }

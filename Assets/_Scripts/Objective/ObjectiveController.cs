@@ -41,7 +41,7 @@ public class ObjectiveController : MonoBehaviour
         currentSheepAmount--;
         currentSacrificeAmount++;
 
-        EventHandler.WhenTrailResourceGain();
+        EventHandler.WhenTrailResourceGain(20f);
         EventHandler.WhenObjectiveChanged();
     }
 
