@@ -3,14 +3,19 @@ using UnityEngine.AI;
 
 public abstract class BaseAnimal : MonoBehaviour, ICapturable
 {
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private float moveSpeed = 3.5f;
+    private NavMeshAgent agent;
 
     public abstract void OnCapture();
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
+        agent.speed = moveSpeed;
     }
 
     private void Update()

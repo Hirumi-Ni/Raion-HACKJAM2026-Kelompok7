@@ -62,7 +62,15 @@ public class TrailLoopDetector : MonoBehaviour
         {
             Debug.Log("Loop successfully detected!");
             debugLoop = loop;
-            trailCapture.Capture(loop.ToArray());
+
+            if (trailController.isTrailHeal)
+            {
+                trailController.GainTrailResourceFromArea(CalculateLoopArea(loop));
+            }
+            else
+            {
+                trailCapture.Capture(loop.ToArray());
+            }
         }
         else
         {
@@ -136,6 +144,22 @@ public class TrailLoopDetector : MonoBehaviour
         intersection = a + t * (b - a);
 
         return true;
+    }
+
+    private float CalculateLoopArea(List<Vector2> loop) //buat ngukur luas polygon buat heal doang // shoelace formula
+    {
+        float area = 0f;
+
+        for (int i = 0; i < loop.Count; i++)
+        {
+            Vector2 current = loop[i];
+            Vector2 next = loop[(i + 1) % loop.Count];
+
+            area += current.x * next.y;
+            area -= next.x * current.y;
+        }
+
+        return Mathf.Abs(area) * 0.5f;
     }
 
     private void OnDrawGizmos()

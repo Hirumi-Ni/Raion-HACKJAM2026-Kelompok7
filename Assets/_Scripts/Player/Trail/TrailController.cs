@@ -1,7 +1,14 @@
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class TrailController : MonoBehaviour
 {
+    private PlayerController playerController;
+
+    [Header("Trail Visual")]
+    [SerializeField] private TrailRenderer captureTrail;
+    [SerializeField] private TrailRenderer healTrail;
     private TrailRenderer trailRenderer;
 
     [Header("Trail Time")]
@@ -9,31 +16,40 @@ public class TrailController : MonoBehaviour
     [SerializeField] private float onReleaseTrailTime = 2;
 
     [Header("Trail Resource")]
-    [field: SerializeField] public float maxTrailResource { get; private set; } = 100f; //max health
-    public float currentTrailResource { get; private set; } //current health
     [SerializeField] private float depletionRate = 5f; //kecepatan depletion per detik (ex: 25f per detik)
-    [SerializeField] private float gainTrailResource = 10f;
+    //[SerializeField] private float gainTrailResource; //ini yang kalo pake tombol langsung makan domba
+    [SerializeField] private float gainTrailPerArea = 1.5f;
+    [SerializeField] private float maxGainTrailPerArea = 40f;
+
+    public float maxTrailResource { get; private set; } //max health
+    public float currentTrailResource { get; private set; } //current health
     public bool isTrailActive { get; private set; }
+    public bool isTrailHeal { get; private set; } = false;
     private bool isTrailHabis = false; //lupa bingnya habis apa
 
     private void Awake()
     {
-        trailRenderer = GetComponentInChildren<TrailRenderer>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
     {
         EventHandler.OnTrailResourceGain += GainTrailResource;
+        EventHandler.OnWolfCaptured += DecreaseTrailResource;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTrailResourceGain -= GainTrailResource;
+        EventHandler.OnWolfCaptured -= DecreaseTrailResource;
     }
 
     private void Start()
     {
-        trailRenderer.emitting = false;
+        maxTrailResource = playerController.playerMaxHealth;
+
+        trailRenderer = null;
+
         currentTrailResource = maxTrailResource;
     }
 
@@ -44,12 +60,19 @@ public class TrailController : MonoBehaviour
 
     private void HandleTrailOnInput()
     {
+        if (InputManager.instance.GetSwitchKeyPress())
+        {
+            isTrailHeal = !isTrailHeal;
+        }
+
         if (InputManager.instance.GetSpaceKeyPress() && currentTrailResource > 0)
         {
-            isTrailActive = true;
+            if (trailRenderer == null)
+            {
+                StartNewTrail();
+            }
 
-            trailRenderer.emitting = true;
-            trailRenderer.time = onHoldTrailTime;
+            isTrailActive = true;
 
             currentTrailResource -= depletionRate * Time.deltaTime;
 
@@ -63,14 +86,49 @@ public class TrailController : MonoBehaviour
         {
             isTrailActive = false;
 
-            trailRenderer.emitting = false;
-            trailRenderer.time = onReleaseTrailTime;
+            if (trailRenderer != null)
+            {
+                trailRenderer.emitting = false;
+                trailRenderer.time = onReleaseTrailTime;
+
+                StartCoroutine(DestroyTrailAfterTime(trailRenderer));
+
+                trailRenderer = null;
+            }
         }
     }
 
-    public void GainTrailResource()
+    private void StartNewTrail()
     {
-        currentTrailResource += gainTrailResource; 
+        TrailRenderer trailPrefab = isTrailHeal ? healTrail : captureTrail;
+
+        trailRenderer = Instantiate(trailPrefab, transform.position, Quaternion.identity, transform);
+
+        trailRenderer.emitting = true;
+        trailRenderer.time = onHoldTrailTime;
+    }
+
+    public void GainTrailResourceFromArea(float area)
+    {
+        float amount = Mathf.Min(area * gainTrailPerArea, maxGainTrailPerArea);
+        GainTrailResource(amount);
+    }
+
+    public void GainTrailResource(float amount)
+    {
+        currentTrailResource += amount; 
         currentTrailResource = Mathf.Clamp(currentTrailResource, 0, maxTrailResource);
+    }
+
+    public void DecreaseTrailResource(float amount)
+    {
+        currentTrailResource -= amount;
+        currentTrailResource = Mathf.Clamp(currentTrailResource, 0, maxTrailResource);
+    }
+
+    private IEnumerator DestroyTrailAfterTime(TrailRenderer trail)
+    {
+        yield return new WaitForSeconds(onReleaseTrailTime);
+        Destroy(trail.gameObject);
     }
 }
