@@ -21,7 +21,7 @@ public class TimerController : MonoBehaviour
             remainingTime = 0f;
             timerEnded = true;
 
-            EventHandler.WhenTimerEnded();
+            EventHandler.WhenGameEnded(false);
         }
     }
 

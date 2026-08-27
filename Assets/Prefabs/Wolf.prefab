@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 780712110691322517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1.25, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 1.25, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -171,9 +171,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 6b2dfb6608aa883499cd79cce6342fbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e59d5d401f4709a439210d30d3c2c547, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RandomMovement
   maxWaitingTime: 1
   range: 15
+  playerTarget: {fileID: 0}
 --- !u!60 &3621112852299819357
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -291,7 +292,7 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.25}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -303,11 +304,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+    - - {x: 0.008246899, y: 0.33961868}
+      - {x: -0.8825436, y: 0.017837316}
+      - {x: -0.3822469, y: -1.1001967}
+      - {x: 0.6391698, y: -1.0659397}
+      - {x: 0.8654156, y: 0.18912023}
   m_UseDelaunayMesh: 1
 --- !u!114 &516456174672431348
 MonoBehaviour:
@@ -321,5 +322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a777ee2913406242b17eb36593add18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wolf
-  moveSpeed: 3.5
+  moveSpeed: 4
   wolfDamage: 20
+  decreaseObjectiveAmount: 2

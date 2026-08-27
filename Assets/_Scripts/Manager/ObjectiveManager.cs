@@ -8,14 +8,14 @@ public class ObjectiveController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.OnCaptureIncreaseObjective += IncreaseObjective;
-        EventHandler.OnCaptureDecreaseObjective += DecreaseObjective;
+        EventHandler.OnIncreaseObjective += IncreaseObjective;
+        EventHandler.OnDecreaseObjective += DecreaseObjective;
     }
 
     private void OnDisable()
     {
-        EventHandler.OnCaptureIncreaseObjective -= IncreaseObjective;
-        EventHandler.OnCaptureDecreaseObjective -= DecreaseObjective;
+        EventHandler.OnIncreaseObjective -= IncreaseObjective;
+        EventHandler.OnDecreaseObjective -= DecreaseObjective;
     }
 
     private void Start()
@@ -33,6 +33,7 @@ public class ObjectiveController : MonoBehaviour
     private void DecreaseObjective(int amount)
     {
         currentSheepAmount -= amount;
+        currentSheepAmount = Mathf.Clamp(currentSheepAmount, 0, targetSheepAmount);
         EventHandler.WhenObjectiveChanged();
     }
 

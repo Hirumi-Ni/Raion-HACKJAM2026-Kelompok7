@@ -8,7 +8,7 @@ public abstract class BaseAnimal : MonoBehaviour, ICapturable
 
     public abstract void OnCapture();
 
-    private void Awake()
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }

@@ -41,4 +41,9 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Switch.WasPressedThisFrame();
     }
+
+    public bool GetPauseKeyPress()
+    {
+        return playerControls.Player.Pause.WasPressedThisFrame();
+    }    
 }

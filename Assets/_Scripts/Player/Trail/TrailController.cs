@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class TrailController : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class TrailController : MonoBehaviour
 
     [Header("Trail Resource")]
     [SerializeField] private float depletionRate = 5f; //kecepatan depletion per detik (ex: 25f per detik)
-    //[SerializeField] private float gainTrailResource; //ini yang kalo pake tombol langsung makan domba
     [SerializeField] private float gainTrailPerArea = 1.5f;
     [SerializeField] private float maxGainTrailPerArea = 40f;
 
@@ -26,6 +24,7 @@ public class TrailController : MonoBehaviour
     public bool isTrailActive { get; private set; }
     public bool isTrailHeal { get; private set; } = false;
     private bool isTrailHabis = false; //lupa bingnya habis apa
+    private bool isGoldRushActive = false;
 
     private void Awake()
     {
@@ -34,14 +33,16 @@ public class TrailController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.OnTrailResourceGain += GainTrailResource;
-        EventHandler.OnCaptureDecreaseTrailResource += DecreaseTrailResource;
+        EventHandler.OnIncreaseTrailResource += GainTrailResource;
+        EventHandler.OnDecreaseTrailResource += DecreaseTrailResource;
+        EventHandler.OnGoldRush += HandleGoldRush;
     }
 
     private void OnDisable()
     {
-        EventHandler.OnTrailResourceGain -= GainTrailResource;
-        EventHandler.OnCaptureDecreaseTrailResource -= DecreaseTrailResource;
+        EventHandler.OnIncreaseTrailResource -= GainTrailResource;
+        EventHandler.OnDecreaseTrailResource -= DecreaseTrailResource;
+        EventHandler.OnGoldRush -= HandleGoldRush;
     }
 
     private void Start()
@@ -74,7 +75,7 @@ public class TrailController : MonoBehaviour
 
             isTrailActive = true;
 
-            if (playerController.rb.linearVelocity.magnitude > .01f )
+            if (playerController.rb.linearVelocity.magnitude > .01f || !isGoldRushActive)
             {
                 currentTrailResource -= depletionRate * Time.deltaTime;
             }
@@ -133,5 +134,17 @@ public class TrailController : MonoBehaviour
     {
         yield return new WaitForSeconds(onReleaseTrailTime);
         Destroy(trail.gameObject);
+    }
+    
+    private void HandleGoldRush(float duration)
+    {
+        isGoldRushActive = true;
+        StartCoroutine(GoldRushCoroutine(duration));
+    }
+
+    private IEnumerator GoldRushCoroutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isGoldRushActive = false;
     }
 }

@@ -5,7 +5,7 @@ public class Sheep : BaseAnimal
     [SerializeField] private int objectiveAmount;
     public override void OnCapture()
     {
-        EventHandler.WhenCaptureIncreaseObjective(objectiveAmount);
+        EventHandler.WhenIncreaseObjective(objectiveAmount);
         Destroy(gameObject, .01f);
     }
 }

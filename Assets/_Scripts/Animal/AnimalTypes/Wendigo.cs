@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class Wendigo : BaseAnimal
 {
+    [Header("Attribute")]
     [SerializeField] private float wendigoDamage;
     [SerializeField] private int decreaseObjectiveAmount;
-    [SerializeField] private float stunDuration;
+    [SerializeField] private float slowAmount;
+    [SerializeField] private float slowDuration;
+
+    [Header("Sprite")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite wendigoFormSprite;
     private int count = 0;
     private bool isTransformed = false;
-    private SpriteRenderer spriteRenderer;
-    private RandomMovement randomMovement;
+    private AnimalMovementBehaviour movementTargetPlayer;
 
     public override void OnCapture()
     {
@@ -24,17 +28,18 @@ public class Wendigo : BaseAnimal
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        randomMovement = GetComponent<RandomMovement>();
+        base.Awake();
+        movementTargetPlayer = GetComponent<AnimalMovementBehaviour>();
     }
 
     private void TransformWendigo()
     {
         isTransformed = true;
 
-        Destroy(randomMovement);
+        movementTargetPlayer.isWendigoTransformed = isTransformed;
+
         spriteRenderer.sprite = wendigoFormSprite;
     }
 
@@ -44,9 +49,10 @@ public class Wendigo : BaseAnimal
 
         if (other.CompareTag("Player"))
         {
-            EventHandler.WhenCaptureDecreasePlayerSpeed(stunDuration);
-            EventHandler.WhenCaptureDecreaseObjective(decreaseObjectiveAmount);
-            EventHandler.WhenCapturedDecreaseTrailResource(wendigoDamage);
+            EventHandler.WhenChangePlayerSpeed(slowAmount, slowDuration);
+            EventHandler.WhenDecreaseObjective(decreaseObjectiveAmount);
+            EventHandler.WhenDecreaseTrailResource(wendigoDamage);
+            Destroy(gameObject, .01f);
         }
     }
 }

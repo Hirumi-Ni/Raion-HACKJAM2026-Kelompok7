@@ -6,8 +6,9 @@ public class GoldenSheep : Sheep
     [SerializeField] private float playerBuffSpeed;
     public override void OnCapture()
     {
-        EventHandler.WhenCaptureGoldRush(goldRushDuration);
-        EventHandler.WhenCaptureGoldRush(playerBuffSpeed);
+        EventHandler.WhenGoldRush(goldRushDuration);
+        EventHandler.WhenChangePlayerSpeed(playerBuffSpeed, goldRushDuration);
+        EventHandler.WhenIncreaseTrailResource(1000f);
         base.OnCapture();
     }
 }

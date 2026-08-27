@@ -6,8 +6,8 @@ public class Wolf : BaseAnimal
     [SerializeField] private int decreaseObjectiveAmount;
     public override void OnCapture()
     {
-        EventHandler.WhenCapturedDecreaseTrailResource(wolfDamage);
-        EventHandler.WhenCaptureDecreaseObjective(decreaseObjectiveAmount);
+        EventHandler.WhenDecreaseTrailResource(wolfDamage);
+        EventHandler.WhenDecreaseObjective(decreaseObjectiveAmount);
         Destroy(gameObject, .01f);
     }
 }

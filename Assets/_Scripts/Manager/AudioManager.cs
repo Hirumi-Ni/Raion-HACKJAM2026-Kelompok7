@@ -4,14 +4,16 @@ using System.Collections.Generic;
 
 public enum SoundType
 {
-    BGM,
+    BGM1_Menu,
+    BGM2_Gameplay,
 }
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance { get; private set; }
 
-    [SerializeField] private SoundID soundBGM;
+    [SerializeField] private SoundID soundBGM1;
+    [SerializeField] private SoundID soundBGM2;
 
     private Dictionary<SoundType, SoundID> soundMappingDictionary;
 
@@ -27,13 +29,14 @@ public class AudioManager : MonoBehaviour
 
         soundMappingDictionary = new Dictionary<SoundType, SoundID>
         {
-            { SoundType.BGM, soundBGM },
+            { SoundType.BGM1_Menu, soundBGM1 },
+            { SoundType.BGM2_Gameplay, soundBGM2 },
         };
     }
 
     private void Start()
     {
-        PlayAudio(SoundType.BGM);
+        PlayAudio(SoundType.BGM1_Menu);
     }
 
     public void PlayAudio(SoundType sound)

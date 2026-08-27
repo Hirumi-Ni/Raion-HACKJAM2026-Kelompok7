@@ -4,37 +4,36 @@ using System;
 public static class EventHandler
 {
     //---===---===-[Action]-===---===---//
-    //Animal Capture Events
-    public static event Action<int> OnCaptureIncreaseObjective; //sheep
-    public static event Action<int> OnCaptureDecreaseObjective; //wendigo klo gagal 
+    //Animal Capture Events / Attribute Modifier
+    public static event Action<int> OnIncreaseObjective; //sheep
+    public static event Action<int> OnDecreaseObjective; //wendigo klo gagal 
 
-    public static event Action<float> OnCaptureDecreaseTrailResource; //wolf
+    public static event Action<float> OnIncreaseTrailResource; //ngeheal
+    public static event Action<float> OnDecreaseTrailResource; //wolf
 
-    public static event Action<float> OnCaptureIncreasePlayerSpeed; //green sheep, nambah speed
-    public static event Action<float> OnCaptureDecreasePlayerSpeed; //wendigo klo gagal
+    public static event Action<float, float> OnChangePlayerSpeed; //green sheep, nambah speed, atau slow speed
 
-    public static event Action<float> OnCaptureGoldRush; //(durasi + ganti bool goldrush) sheep emas
-    public static event Action<float> OnCaptureBlindPlayer; //(durasi) sheep hitam (kambing hitam awkoakw)
+    public static event Action<float> OnGoldRush; //(durasi + ganti bool goldrush) sheep emas
+    public static event Action<float> OnBlindPlayer; //(durasi) sheep hitam (kambing hitam awkoakw)
     
     //Game and Trail Events
     public static event Action OnObjectiveChanged;
-    public static event Action<float> OnTrailResourceGain; //ngeheal
-    public static event Action OnTimerEnded; //trigger timer selesai (timer 0)
     public static event Action<bool> OnGameEnded; //true menang, false kalah
     
     //---===---===-[Method]-===---===---//
     //Animal Capture Method
-    public static void WhenCaptureIncreaseObjective(int amount) => OnCaptureIncreaseObjective?.Invoke(amount);
-    public static void WhenCaptureDecreaseObjective(int amount) => OnCaptureDecreaseObjective?.Invoke(amount);
-    public static void WhenCapturedDecreaseTrailResource(float amount) => OnCaptureDecreaseTrailResource?.Invoke(amount);
-    public static void WhenCaptureIncreasePlayerSpeed(float amount) => OnCaptureIncreasePlayerSpeed?.Invoke(amount);
-    public static void WhenCaptureDecreasePlayerSpeed(float amount) => OnCaptureDecreasePlayerSpeed?.Invoke(amount);
-    public static void WhenCaptureGoldRush(float duration) => OnCaptureGoldRush?.Invoke(duration);
-    public static void WhenCaptureBlindPlayer(float duration) => OnCaptureBlindPlayer?.Invoke(duration);
+    public static void WhenIncreaseObjective(int amount) => OnIncreaseObjective?.Invoke(amount);
+    public static void WhenDecreaseObjective(int amount) => OnDecreaseObjective?.Invoke(amount);
+
+    public static void WhenIncreaseTrailResource(float amount) => OnIncreaseTrailResource?.Invoke(amount);
+    public static void WhenDecreaseTrailResource(float amount) => OnDecreaseTrailResource?.Invoke(amount);
+
+    public static void WhenChangePlayerSpeed(float amount, float duration) => OnChangePlayerSpeed?.Invoke(amount, duration);
+
+    public static void WhenGoldRush(float duration) => OnGoldRush?.Invoke(duration);
+    public static void WhenBlindPlayer(float duration) => OnBlindPlayer?.Invoke(duration);
 
     //Game and Trail Method
     public static void WhenObjectiveChanged() => OnObjectiveChanged?.Invoke();
-    public static void WhenTrailResourceGain(float amount) => OnTrailResourceGain?.Invoke(amount);
-    public static void WhenTimerEnded() => OnTimerEnded?.Invoke();
     public static void WhenGameEnded(bool result) => OnGameEnded?.Invoke(result);
 }

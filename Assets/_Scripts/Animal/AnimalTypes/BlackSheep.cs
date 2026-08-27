@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class BlackSheep : Sheep
+public class BlackSheep : BaseAnimal
 {
     [SerializeField] private float blindDuration;
+    [SerializeField] private int decreaseObjectiveAmount;
     public override void OnCapture()
     {
-        EventHandler.WhenCaptureBlindPlayer(blindDuration);
-        base.OnCapture();
+        EventHandler.WhenBlindPlayer(blindDuration);
+        EventHandler.WhenDecreaseObjective(decreaseObjectiveAmount);
+
+        Destroy(gameObject, .01f);
     }
 }
