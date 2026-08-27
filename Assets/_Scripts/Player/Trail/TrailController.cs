@@ -12,7 +12,7 @@ public class TrailController : MonoBehaviour
 
     [Header("Trail Time")]
     [SerializeField] private float onHoldTrailTime = 6;
-    [SerializeField] private float onReleaseTrailTime = 2;
+    private float onReleaseTrailTime;
 
     [Header("Trail Resource")]
     [SerializeField] private float depletionRate = 5f; //kecepatan depletion per detik (ex: 25f per detik)
@@ -52,6 +52,7 @@ public class TrailController : MonoBehaviour
         trailRenderer = null;
 
         currentTrailResource = maxTrailResource;
+        onReleaseTrailTime = onHoldTrailTime * 0.20f;
     }
 
     private void Update()
