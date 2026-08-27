@@ -12,7 +12,6 @@ public class HudScript : MonoBehaviour
     [Header("UI Component")]
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text objectiveSheepText;
-    [SerializeField] private TMP_Text objectiveSacrificeText;
     [SerializeField] private Image healthbarImage;
 
     private void OnEnable()
@@ -40,6 +39,5 @@ public class HudScript : MonoBehaviour
     private void UpdateObjectiveCounter()
     {
         objectiveSheepText.text = $"{objectiveController.currentSheepAmount}/{objectiveController.targetSheepAmount}";
-        objectiveSacrificeText.text = $"{objectiveController.currentSacrificeAmount}/{objectiveController.targetSacrificeAmount}";
     }
 }

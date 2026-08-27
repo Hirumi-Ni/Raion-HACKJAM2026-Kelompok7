@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public float playerMaxHealth { get; private set; }
     [SerializeField] private float moveSpeed;
     private float acceleration = 50f;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb { get; private set; }
     private Vector2 moveInput;
 
     private void Awake()
@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
     private void HandleInput()
     {
         moveInput = InputManager.instance.GetPlayerMovement().normalized;
-
-        if (InputManager.instance.GetSacrificeKeyPress()) EventHandler.WhenAnimalSacrificed();
     }
     
     private void HandleMovement()

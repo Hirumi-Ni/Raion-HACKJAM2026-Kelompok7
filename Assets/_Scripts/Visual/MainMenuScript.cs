@@ -4,7 +4,7 @@ public class MainMenuScript : MonoBehaviour
 {
     public void StartGame()
     {
-        GameManager.instance.ChangeScene(GameScene.Level);
+        GameManager.instance.ChangeScene(GameScene.LevelSelection);
     }
 
     public void ExitGame()

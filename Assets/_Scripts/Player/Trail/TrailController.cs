@@ -35,13 +35,13 @@ public class TrailController : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.OnTrailResourceGain += GainTrailResource;
-        EventHandler.OnWolfCaptured += DecreaseTrailResource;
+        EventHandler.OnCaptureDecreaseTrailResource += DecreaseTrailResource;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTrailResourceGain -= GainTrailResource;
-        EventHandler.OnWolfCaptured -= DecreaseTrailResource;
+        EventHandler.OnCaptureDecreaseTrailResource -= DecreaseTrailResource;
     }
 
     private void Start()
@@ -74,7 +74,10 @@ public class TrailController : MonoBehaviour
 
             isTrailActive = true;
 
-            currentTrailResource -= depletionRate * Time.deltaTime;
+            if (playerController.rb.linearVelocity.magnitude > .01f )
+            {
+                currentTrailResource -= depletionRate * Time.deltaTime;
+            }
 
             if (currentTrailResource <= 0f && !isTrailHabis)
             {

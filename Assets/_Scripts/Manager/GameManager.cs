@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 public enum GameScene
 {
     MainMenu,
-    Level,
+    LevelSelection,
+    Level1,
+    Level2,
+    Level3,
     Tutorial //paling
 }
 
