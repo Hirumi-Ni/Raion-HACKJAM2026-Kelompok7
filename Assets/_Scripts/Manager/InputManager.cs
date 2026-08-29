@@ -27,6 +27,11 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Move.ReadValue<Vector2>();
     }
 
+    public Vector2 GetMouseDelta()
+    {
+        return playerControls.Player.Look.ReadValue<Vector2>();
+    }
+
     public bool GetSpaceKeyPress()
     {
         return playerControls.Player.Jump.IsPressed();
@@ -46,4 +51,9 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Pause.WasPressedThisFrame();
     }    
+
+    public bool GetLeftClickPress()
+    {
+        return playerControls.Player.Attack.WasPressedThisFrame();
+    }
 }

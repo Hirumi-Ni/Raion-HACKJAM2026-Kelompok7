@@ -6,6 +6,7 @@ public class Sheep : BaseAnimal
     public override void OnCapture()
     {
         EventHandler.WhenIncreaseObjective(objectiveAmount);
-        Destroy(gameObject, .01f);
+        base.OnCapture();
+        Destroy(gameObject, .9f);
     }
 }

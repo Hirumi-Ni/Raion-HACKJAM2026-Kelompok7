@@ -1,7 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-//cek ini buat referensinya: https://medium.com/@markomeara98/calculating-intersection-points-in-unity-cf010c155491
+//shoutout to these honorable mention:
+// https://medium.com/@markomeara98/calculating-intersection-points-in-unity-cf010c155491
+// https://discussions.unity.com/t/allowing-player-to-draw-circle-around-enemies-best-method/557016/6
+// https://discussions.unity.com/t/detecting-loops/513976/8
+// https://discussions.unity.com/t/how-to-check-if-an-object-is-surrounded/100612
+// and not but not least cet jipiti incognito mode
 public class TrailLoopDetector : MonoBehaviour
 {
     [SerializeField] private TrailCapture trailCapture;

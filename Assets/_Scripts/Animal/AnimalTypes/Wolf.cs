@@ -8,6 +8,7 @@ public class Wolf : BaseAnimal
     {
         EventHandler.WhenDecreaseTrailResource(wolfDamage);
         EventHandler.WhenDecreaseObjective(decreaseObjectiveAmount);
-        Destroy(gameObject, .01f);
+        base.OnCapture();
+        Destroy(gameObject, .9f);
     }
 }

@@ -24,7 +24,8 @@ public class Wendigo : BaseAnimal
 
         if (count >= 2)
         {
-            Destroy(gameObject, .01f);
+            base.OnCapture();
+            Destroy(gameObject, .9f);
         }
     }
 

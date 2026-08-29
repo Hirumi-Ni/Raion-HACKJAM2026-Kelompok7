@@ -19,7 +19,8 @@ public static class EventHandler
     //Game and Trail Events
     public static event Action OnObjectiveChanged;
     public static event Action<bool> OnGameEnded; //true menang, false kalah
-    
+    public static event Action<float, int> OnLevelCompleted;
+
     //---===---===-[Method]-===---===---//
     //Animal Capture Method
     public static void WhenIncreaseObjective(int amount) => OnIncreaseObjective?.Invoke(amount);
@@ -36,4 +37,5 @@ public static class EventHandler
     //Game and Trail Method
     public static void WhenObjectiveChanged() => OnObjectiveChanged?.Invoke();
     public static void WhenGameEnded(bool result) => OnGameEnded?.Invoke(result);
+    public static void WhenLevelCompleted(float completionTime, int levelID) => OnLevelCompleted?.Invoke(completionTime, levelID);
 }

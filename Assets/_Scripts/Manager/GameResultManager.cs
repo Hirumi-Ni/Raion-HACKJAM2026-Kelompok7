@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class GameResultManager : MonoBehaviour
 {
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject loseUI;
-
+    [SerializeField] private TimerController timerController;
     private void OnEnable()
     {
         EventHandler.OnGameEnded += HandleGameEnd;
@@ -23,9 +24,10 @@ public class GameResultManager : MonoBehaviour
 
     private void HandleGameEnd(bool result)
     {
+        if (result) timerController.FinishLevel();
+        Time.timeScale = 0;
         GameObject resultUI = result ? winUI : loseUI;
         resultUI.SetActive(true);
-        Time.timeScale = 0;
     }
 
     public void ButtonRestartLevel()
@@ -36,5 +38,10 @@ public class GameResultManager : MonoBehaviour
     public void ButtonBackToMainMenu()
     {
         GameManager.instance.ChangeScene(GameScene.MainMenu);
+    }
+
+    public void ChangeToEndCutscene()
+    {
+        GameManager.instance.ChangeScene(GameScene.EndCutscene);
     }
 }

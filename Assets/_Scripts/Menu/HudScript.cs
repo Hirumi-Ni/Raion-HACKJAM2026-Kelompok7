@@ -68,7 +68,6 @@ public class HudScript : MonoBehaviour
 
     private IEnumerator BlindPlayerCoroutine(float duration)
     {
-        //pop up splat screen with quick fade
         yield return new WaitForSeconds(duration);
 
         blindScreen.DOFade(0f, 0.4f);

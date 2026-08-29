@@ -8,7 +8,7 @@ public class BlackSheep : BaseAnimal
     {
         EventHandler.WhenBlindPlayer(blindDuration);
         EventHandler.WhenDecreaseObjective(decreaseObjectiveAmount);
-
-        Destroy(gameObject, .01f);
+        base.OnCapture();
+        Destroy(gameObject, .9f);
     }
 }
