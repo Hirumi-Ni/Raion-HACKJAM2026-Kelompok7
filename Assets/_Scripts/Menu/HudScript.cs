@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class HudScript : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class HudScript : MonoBehaviour
     [SerializeField] private Image healthbarImage;
     [SerializeField] private Image blindScreen;
     [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private Color redColor = Color.red;
+    [SerializeField] private Color purpleColor = Color.purple;
 
     private void OnEnable()
     {
@@ -34,6 +37,7 @@ public class HudScript : MonoBehaviour
     {
         UpdateObjectiveCounter();
         healthbarImage.fillAmount = trailController.maxTrailResource;
+        healthbarImage.color = redColor;
 
         blindScreen.color = new Color(1f, 1f, 1f, 0f);
         blindScreen.transform.localScale = Vector3.one * 0.1f;
@@ -43,6 +47,8 @@ public class HudScript : MonoBehaviour
     private void Update()
     {
         if (InputManager.instance.GetPauseKeyPress()) TogglePause();
+
+        healthbarImage.color = trailController.isTrailHeal ? purpleColor : redColor;
 
         if (Time.timeScale == 0f) return;
 

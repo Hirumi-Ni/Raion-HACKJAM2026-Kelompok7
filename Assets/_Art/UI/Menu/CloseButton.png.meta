@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0a4db592e54446a47982600bec7eda9b
+guid: ba6772e68a359794396666e0e5e5184e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8288426215254106694
-    second: 8_0
+      213: 7228427573584015795
+    second: CloseButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8_0
+      name: CloseButton_0
       rect:
         serializedVersion: 2
-        x: 116
-        y: 27
-        width: 987
-        height: 1011
+        x: 149
+        y: 144
+        width: 1302
+        height: 1239
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 642a1439ab7660370800000000000000
-      internalID: 8288426215254106694
+      spriteID: 3b13d109498805460800000000000000
+      internalID: 7228427573584015795
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      8_0: 8288426215254106694
+      CloseButton_0: 7228427573584015795
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

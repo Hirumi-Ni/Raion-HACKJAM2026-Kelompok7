@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0a4db592e54446a47982600bec7eda9b
+guid: 02f63636f2d1d8c43b808dc07e939ae0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8288426215254106694
-    second: 8_0
+      213: 2477749888113986269
+    second: FixNewLogoAPFS_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8_0
+      name: FixNewLogoAPFS_0
       rect:
         serializedVersion: 2
-        x: 116
-        y: 27
-        width: 987
-        height: 1011
+        x: 37
+        y: 26
+        width: 835
+        height: 859
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 642a1439ab7660370800000000000000
-      internalID: 8288426215254106694
+      spriteID: dda4c43456cb26220800000000000000
+      internalID: 2477749888113986269
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      8_0: 8288426215254106694
+      FixNewLogoAPFS_0: 2477749888113986269
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

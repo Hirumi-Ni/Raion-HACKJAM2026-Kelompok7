@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PauseScript : MonoBehaviour
 {
-    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject pauseMenu;
 
     public void ButtonResumeGame()
@@ -17,6 +16,11 @@ public class PauseScript : MonoBehaviour
     }
 
     public void ButtonMainMenu()
+    {
+        GameManager.instance.ChangeScene(GameScene.MainMenu);
+    }
+
+    public void ButtonLevelSelect()
     {
         GameManager.instance.ChangeScene(GameScene.MainMenu);
     }

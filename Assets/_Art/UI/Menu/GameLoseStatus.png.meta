@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 0a4db592e54446a47982600bec7eda9b
+guid: 9bfbb30ed9108bc488743292403ad4e5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8288426215254106694
-    second: 8_0
+      213: -5271795459651356598
+    second: GameLoseStatus_0
+  - first:
+      213: -2142729862873868814
+    second: GameLoseStatus_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8_0
+      name: GameLoseStatus_0
       rect:
         serializedVersion: 2
-        x: 116
-        y: 27
-        width: 987
-        height: 1011
+        x: 0
+        y: 0
+        width: 797
+        height: 850
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 642a1439ab7660370800000000000000
-      internalID: 8288426215254106694
+      spriteID: a48b6fae5f1d6d6b0800000000000000
+      internalID: -5271795459651356598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameLoseStatus_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 17
+        width: 106
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f518c9da8e7342e0800000000000000
+      internalID: -2142729862873868814
       vertices: []
       indices: 
       edges: []
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      8_0: 8288426215254106694
+      GameLoseStatus_0: -5271795459651356598
+      GameLoseStatus_1: -2142729862873868814
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

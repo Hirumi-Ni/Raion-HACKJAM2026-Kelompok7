@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0a4db592e54446a47982600bec7eda9b
+guid: 330dca16078dd7b45b5aae16b1b25e1f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8288426215254106694
-    second: 8_0
+      213: 3084753243943349820
+    second: ButtonPlain3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8_0
+      name: ButtonPlain3_0
       rect:
         serializedVersion: 2
-        x: 116
-        y: 27
-        width: 987
-        height: 1011
+        x: 2
+        y: 45
+        width: 673
+        height: 268
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 642a1439ab7660370800000000000000
-      internalID: 8288426215254106694
+      spriteID: c3e2afc4bbe3fca20800000000000000
+      internalID: 3084753243943349820
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      8_0: 8288426215254106694
+      ButtonPlain3_0: 3084753243943349820
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
