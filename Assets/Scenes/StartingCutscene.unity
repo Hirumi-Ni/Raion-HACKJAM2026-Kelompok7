@@ -2718,8 +2718,8 @@ MonoBehaviour:
   imageFadeDuration: 0.5
   textFadeDuration: 0.4
   imageToTextDelay: 0.25
-  delayBetween: 2
-  stripeDelay: 1.5
+  delayBetween: 1.5
+  stripeDelay: 1
   endScene: 2
 --- !u!1 &1698179294
 GameObject:
