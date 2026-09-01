@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class HudScript : MonoBehaviour
 {
@@ -11,13 +10,16 @@ public class HudScript : MonoBehaviour
     [SerializeField] private ObjectiveController objectiveController;
     [SerializeField] private TimerController timerController;
     [SerializeField] private TrailController trailController;
+    private bool isPaused = false;
+    private bool isStolen = false;
 
     [Header("UI Component")]
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text objectiveSheepText;
     [SerializeField] private Image healthbarImage;
     [SerializeField] private Image blindScreen;
-    [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private PauseScript pauseObject;
+    [SerializeField] private CanvasGroup stolenSheepIndicator;
     [SerializeField] private Color redColor = Color.red;
     [SerializeField] private Color purpleColor = Color.purple;
 
@@ -25,12 +27,14 @@ public class HudScript : MonoBehaviour
     {
         EventHandler.OnObjectiveChanged += UpdateObjectiveCounter;
         EventHandler.OnBlindPlayer += HandleBlindPlayer;
+        EventHandler.OnDecreaseObjective += SheepStolen;
     }
 
     private void OnDisable()
     {
         EventHandler.OnObjectiveChanged -= UpdateObjectiveCounter;
         EventHandler.OnBlindPlayer -= HandleBlindPlayer;
+        EventHandler.OnDecreaseObjective -= SheepStolen;
     }
 
     private void Start()
@@ -41,7 +45,10 @@ public class HudScript : MonoBehaviour
 
         blindScreen.color = new Color(1f, 1f, 1f, 0f);
         blindScreen.transform.localScale = Vector3.one * 0.1f;
-        pauseScreen.SetActive(false);
+
+        stolenSheepIndicator.gameObject.SetActive(false);
+        stolenSheepIndicator.alpha = 0;
+        pauseObject.ButtonResumeGame();
     }
 
     private void Update()
@@ -82,17 +89,38 @@ public class HudScript : MonoBehaviour
 
     private void TogglePause()
     {
-        bool isPaused = Time.timeScale == 0f;
-
         if (isPaused)
-        {
-            pauseScreen.SetActive(false);
-            Time.timeScale = 1f;
+        { 
+            pauseObject.ButtonResumeGame(); 
+            isPaused = false; 
+        } 
+        else 
+        { 
+            pauseObject.ButtonPauseGame(); 
+            isPaused = true; 
         }
-        else
-        {
-            pauseScreen.SetActive(true);
-            Time.timeScale = 0f;
-        }
+    }
+
+    private void SheepStolen(int _)
+    {
+        if (isStolen) return;
+        StartCoroutine(StartStolenIndicator());
+    }
+
+    private IEnumerator StartStolenIndicator()
+    {
+        isStolen = true;
+        stolenSheepIndicator.gameObject.SetActive(true);
+
+        UIAnimationManager.instance.Fade(stolenSheepIndicator, 1);
+
+        yield return new WaitForSeconds(1);
+
+        UIAnimationManager.instance.Fade(stolenSheepIndicator, 0);
+
+        yield return new WaitForSeconds(2);
+
+        stolenSheepIndicator.gameObject.SetActive(false);
+        isStolen = false;
     }
 }

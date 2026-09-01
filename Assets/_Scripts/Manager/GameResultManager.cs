@@ -1,11 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameResultManager : MonoBehaviour
 {
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject loseUI;
     [SerializeField] private TimerController timerController;
+    [SerializeField] private CanvasGroup gameResultFadeObject; //panel, text, button restart + button main menu
+    [SerializeField] private GameObject winLogo; 
+    [SerializeField] private GameObject loseLogo; 
+
     private void OnEnable()
     {
         EventHandler.OnGameEnded += HandleGameEnd;
@@ -18,6 +23,7 @@ public class GameResultManager : MonoBehaviour
 
     private void Start()
     {
+        gameResultFadeObject.alpha = 0f;
         winUI.SetActive(false);
         loseUI.SetActive(false);
     }
@@ -26,8 +32,17 @@ public class GameResultManager : MonoBehaviour
     {
         if (result) timerController.FinishLevel();
         Time.timeScale = 0;
+
         GameObject resultUI = result ? winUI : loseUI;
         resultUI.SetActive(true);
+
+        InitializeAnimation(resultUI);
+    }
+
+    private void InitializeAnimation(GameObject resultUI)
+    {
+        UIAnimationManager.instance.Fade(gameResultFadeObject, 1);
+        UIAnimationManager.instance.Stamp(resultUI.transform, resultUI.transform.localScale);
     }
 
     public void ButtonRestartLevel()
@@ -38,6 +53,11 @@ public class GameResultManager : MonoBehaviour
     public void ButtonBackToMainMenu()
     {
         GameManager.instance.ChangeScene(GameScene.MainMenu);
+    }
+
+    public void ButtonBackToLevelSelect()
+    {
+        GameManager.instance.ChangeScene(GameScene.LevelSelection);
     }
 
     public void ChangeToEndCutscene()

@@ -583,6 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrailController
   captureTrail: {fileID: 4248385014510012619, guid: 87c98fe2298ae0e48b23ef11e855e3a6, type: 3}
   healTrail: {fileID: 8427515673345849736, guid: d19fb3cde90c01f4c8a99a7b8dfb9137, type: 3}
+  loopColorMultiplier: 0.6
   onHoldTrailTime: 16
   depletionRate: 6
   gainTrailPerArea: 1.5

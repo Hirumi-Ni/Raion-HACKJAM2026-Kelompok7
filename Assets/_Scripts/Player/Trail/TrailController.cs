@@ -8,6 +8,7 @@ public class TrailController : MonoBehaviour
     [Header("Trail Visual")]
     [SerializeField] private TrailRenderer captureTrail;
     [SerializeField] private TrailRenderer healTrail;
+    [SerializeField] private float loopColorMultiplier = 0.4f;
     private TrailRenderer trailRenderer;
 
     [Header("Trail Time")]
@@ -25,6 +26,7 @@ public class TrailController : MonoBehaviour
     public bool isTrailHeal { get; private set; } = false;
     private bool isTrailHabis = false; //lupa bingnya habis apa
     private bool isGoldRushActive = false;
+    private bool trailStoppedByLoop;
 
     private void Awake()
     {
@@ -62,55 +64,75 @@ public class TrailController : MonoBehaviour
 
     private void HandleTrailOnInput()
     {
-        if (InputManager.instance.GetSwitchKeyPress())
-        {
-            isTrailHeal = !isTrailHeal;
+        if (InputManager.instance.GetSwitchKeyPress()) 
+        { 
+            isTrailHeal = !isTrailHeal; 
         }
 
-        if (InputManager.instance.GetSpaceKeyPress() && currentTrailResource > 0)
-        {
-            if (trailRenderer == null)
-            {
-                StartNewTrail();
+        if (currentTrailResource <= 0f && !isTrailHabis) 
+        { 
+            isTrailHabis = true; 
+            EventHandler.WhenGameEnded(false); 
+        }
+
+        bool spaceHeld = InputManager.instance.GetSpaceKeyPress();
+        
+        if (!spaceHeld) 
+        { 
+            trailStoppedByLoop = false; 
+            isTrailActive = false; 
+            if (trailRenderer != null) 
+            { 
+                trailRenderer.emitting = false; 
+                trailRenderer.time = onReleaseTrailTime; 
+                StartCoroutine(DestroyTrailAfterTime(trailRenderer)); 
+                trailRenderer = null; 
+            } 
+            return; 
+        } 
+        
+        if (trailStoppedByLoop) 
+        { 
+            isTrailActive = false; 
+            return; 
+        } 
+
+        if (spaceHeld && currentTrailResource > 0) 
+        { 
+            if (playerController.rb.linearVelocity.magnitude > .01f && !isGoldRushActive) 
+            { 
+                currentTrailResource -= depletionRate * Time.deltaTime; 
             }
+            
+            if (trailRenderer == null) 
+            { 
+                StartNewTrail(); 
+            } 
 
             isTrailActive = true;
 
-            if (playerController.rb.linearVelocity.magnitude > .01f || !isGoldRushActive)
-            {
-                currentTrailResource -= depletionRate * Time.deltaTime;
-            }
-
-            if (currentTrailResource <= 0f && !isTrailHabis)
-            {
-                isTrailHabis = true;
-                EventHandler.WhenGameEnded(false);
-            }
-        }
-        else
-        {
-            isTrailActive = false;
-
-            if (trailRenderer != null)
-            {
-                trailRenderer.emitting = false;
-                trailRenderer.time = onReleaseTrailTime;
-
-                StartCoroutine(DestroyTrailAfterTime(trailRenderer));
-
-                trailRenderer = null;
-            }
-        }
-    }
-
-    private void StartNewTrail()
-    {
-        TrailRenderer trailPrefab = isTrailHeal ? healTrail : captureTrail;
-
-        trailRenderer = Instantiate(trailPrefab, transform.position, Quaternion.identity, transform);
-
-        trailRenderer.emitting = true;
-        trailRenderer.time = onHoldTrailTime;
+        } 
+    } 
+    
+    private void StartNewTrail() 
+    { 
+        TrailRenderer trailPrefab = isTrailHeal ? healTrail : captureTrail; 
+        trailRenderer = Instantiate( trailPrefab, transform.position, Quaternion.identity, transform); 
+        trailRenderer.emitting = true; 
+        trailRenderer.time = onHoldTrailTime; 
+    } 
+    public void StopTrail() 
+    { 
+        if (trailRenderer == null) return; 
+        
+        trailStoppedByLoop = true; 
+        isTrailActive = false; 
+        
+        trailRenderer.emitting = false; 
+        trailRenderer.time = onReleaseTrailTime; 
+        
+        StartCoroutine(DestroyTrailAfterTime(trailRenderer)); 
+        trailRenderer = null; 
     }
 
     public void GainTrailResourceFromArea(float area)
@@ -147,5 +169,27 @@ public class TrailController : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         isGoldRushActive = false;
+    }
+
+    public void SetTrailLoopColor()
+    {
+        if (trailRenderer == null) return; 
+        
+        Gradient originalGradient = trailRenderer.colorGradient; 
+        GradientColorKey[] colorKeys = originalGradient.colorKeys; 
+        GradientAlphaKey[] alphaKeys = originalGradient.alphaKeys; 
+        
+        for (int i = 0; i < colorKeys.Length; i++) 
+        { 
+            Color color = colorKeys[i].color; 
+            color.r *= loopColorMultiplier; 
+            color.g *= loopColorMultiplier; 
+            color.b *= loopColorMultiplier; 
+            colorKeys[i].color = color; 
+        } 
+        
+        Gradient darkerGradient = new Gradient(); 
+        darkerGradient.SetKeys(colorKeys, alphaKeys); 
+        trailRenderer.colorGradient = darkerGradient; 
     }
 }

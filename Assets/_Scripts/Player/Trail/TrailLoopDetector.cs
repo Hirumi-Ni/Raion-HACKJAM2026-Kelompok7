@@ -13,6 +13,7 @@ public class TrailLoopDetector : MonoBehaviour
     private TrailPathRecorder pathRecorder;
     private TrailController trailController;
     private bool wasTrailActive;
+    private bool loopDetectedThisTrail;
 
     #region DebugAttribute
     // Debug
@@ -36,9 +37,14 @@ public class TrailLoopDetector : MonoBehaviour
     {
         bool isTrailActive = trailController.isTrailActive;
 
-        if (isTrailActive && !wasTrailActive)
+        if (isTrailActive && !wasTrailActive) 
+        { 
+            OnTrailStart(); 
+        }
+
+        if (isTrailActive && !loopDetectedThisTrail) 
         {
-            OnTrailStart();
+            CheckForLoop();
         }
 
         if (!isTrailActive && wasTrailActive)
@@ -53,36 +59,43 @@ public class TrailLoopDetector : MonoBehaviour
     {
         pathRecorder.points.Clear();
 
+        loopDetectedThisTrail = false;
         showDebugSegments = false;
         showIntersection = false;
     }
 
-    private void OnTrailEnd()
+    private void CheckForLoop()
     {
-        List<Vector2> points = pathRecorder.points;
+        List<Vector2> points = pathRecorder.points; 
+        if (points.Count < 4) return; 
+        
+        if (!CheckClosedLoop(points, out List<Vector2> loop)) return; 
+        
+        Debug.Log("Loop successfully detected!"); 
+        
+        loopDetectedThisTrail = true; 
 
-        if (points.Count < 4) return;
+        trailController.SetTrailLoopColor(); 
 
-        if (CheckClosedLoop(points, out List<Vector2> loop))
-        {
-            Debug.Log("Loop successfully detected!");
-            debugLoop = loop;
-
-            if (trailController.isTrailHeal)
-            {
-                trailController.GainTrailResourceFromArea(CalculateLoopArea(loop));
-            }
-            else
-            {
-                trailCapture.Capture(loop.ToArray());
-            }
-        }
-        else
-        {
-            Debug.Log("No Loop Detected");
+        if (trailController.isTrailHeal) 
+        { 
+            trailController.GainTrailResourceFromArea( CalculateLoopArea(loop) ); 
+        } 
+        else 
+        { 
+            trailCapture.Capture(loop.ToArray()); 
         }
 
-        points.Clear();
+        trailController.StopTrail();
+    }
+
+    private void OnTrailEnd()
+    { 
+        if (!loopDetectedThisTrail) 
+        { 
+            CheckForLoop(); 
+        } 
+        pathRecorder.points.Clear(); 
     }
 
     private bool CheckClosedLoop(List<Vector2> points, out List<Vector2> loop)
